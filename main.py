@@ -26,22 +26,17 @@ def get_query_url(state_index, value_index):
     return query_url
 
 def get_variable_table_df():
-    print('comeon')
     variable_table_url = 'https://api.census.gov/data/2020/acs/acs5/variables.html'
-    print('???')
     v_table = pd.read_html(variable_table_url)
     variable_df = pd.DataFrame(v_table[0])
-    print('lll')
     return variable_df
 
 def get_language_spoken_index(variable_table):
-    print('hur')
     start_index = variable_table[variable_table['Name'] == 'B16001_001E'].index[0]
     end_index = variable_table[variable_table['Name'] == 'B16001_128E'].index[0]
     return [start_index, end_index + 1]
 
 def get_variable_names(variable_table, indices):
-    print('bruh')
     language_spoken_variables = ",".join(variable_table.iloc[indices[0]: indices[1]]['Label'].values).replace(', ', ' ').replace('!!', ' ').replace(':', '').split(',')
     old_variables = language_spoken_variables
     no_repeats = [language_spoken_variables[1]]
